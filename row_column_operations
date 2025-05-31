@@ -1,0 +1,41 @@
+A SparkSession is the unified entry point for interacting with all Spark functionalities, including data loading, DataFrame operations, 
+and SQL queries.
+
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder.appName("SparkApplication").getOrCreate()
+employees_df  = spark.read.csv("C:/data/employees.csv", header=True, inferSchema=True)
+
+Basic Column Operations
+
+| Operation                      | Description           | Code                                                                              |
+| ------------------------------ | --------------------- | --------------------------------------------------------------------------------- |
+| **1. Select specific columns** | Show only names       | `employees_df.select("first_name", "last_name").show()`                                     |
+| **2. Add new column**          | Bonus salary          | `employees_df.withColumn("bonus", employees_df["salary"] * 0.10).show()`                              |
+| **3. Rename column**           | Make it readable      | `employees_df.withColumnRenamed("first_name", "fname").show()`                              |
+| **4. Drop column**             | Remove location       | `employees_df.drop("location").show()`                                                      |
+| **5. Filter rows**             | Salary > 80000        | `employees_df.filter(employees_df.salary > 80000).show()`                                             |
+| **6. Conditional column**      | Label high/low salary | `employees_df.withColumn("level", when(employees_df.salary > 80000, "High").otherwise("Low")).show()` |
+| **7. String operations**       | Uppercase last name   | `employees_df.withColumn("last_upper", upper(employees_df["last_name"])).show()`                      |
+| **8. Date extraction**         | Extract year          | `employees_df.withColumn("year", year(employees_df["join_date"])).show()`                             |
+| **9. Cast column**             | Make salary integer   | `employees_df.withColumn("salary_int", employees_df["salary"].cast("int")).show()`                    |
+| **10. Replace value**          | Replace city          | `employees_df.replace("New York", "NY", "location").show()`                                 |
+
+
+Row Operations 
+
+---- --------------------------------------------------------------------------------- ---------------------------------------------------------------------------------
+| Operation                   | Description                       | Code                                                 |
+| --------------------------- | --------------------------------- | ---------------------------------------------------- |
+| **11. Sort rows**           | Highest salary first              | `employees_df.orderBy(employees_df.salary.desc()).show()`                |
+| **12. Remove duplicates**   | On department                     | `employees_df.dropDuplicates(["department"]).show()`           |
+| **13. Group and count**     | Group by dept                     | `employees_df.groupBy("department").count().show()`            |
+| **14. Group and aggregate** | Avg salary                        | `employees_df.groupBy("department").agg(avg("salary")).show()` |
+               |
+| **16. Limit rows**          | First 5 records                   | `employees_df.limit(5).show()`                                 |
+
+| **18. Collect to driver**   | For small data                    | `employees_df.collect()`                                       |
+| **19. Repartition**         | Change partition                  | `employees_df.repartition(3).rdd.getNumPartitions()`           |
+| **20. Cache data**          | Optimize performance              | `employees_df.cache()`                              |
+ --------------------------------------------------------------------------------- ---------------------------------------------------------------------------------
+ 
