@@ -53,9 +53,7 @@ projects_df = spark.read.csv("C:/data/projects.csv", header=True, inferSchema=Tr
 1. Categorize Salary Level
 Goal: Add a column salary_band based on salary using when–otherwise.
 
-python
-Copy
-Edit
+
 from pyspark.sql.functions import when
 
 employees_df = spark.read.csv("employees.csv", header=True, inferSchema=True)
@@ -72,9 +70,6 @@ employees_df.select("employee_id", "salary", "salary_band").show()
 2. Performance Rating Category (After Join)
 Goal: Add a rating_level column based on performance_score.
 
-python
-Copy
-Edit
 from pyspark.sql.functions import when
 
 projects_df = spark.read.csv("projects.csv", header=True, inferSchema=True)
@@ -94,9 +89,7 @@ joined_df.select("employee_id", "performance_score", "rating_level").show()
 3. Remote Eligibility Bonus Flag
 Goal: Flag remote-eligible employees in IT or Finance departments.
 
-python
-Copy
-Edit
+
 from pyspark.sql.functions import when
 
 joined_df = joined_df.withColumn(
