@@ -1,1 +1,23 @@
 
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import *
+from pyspark.sql.functions import broadcast
+
+
+
+spark = SparkSession.builder.appName("SparkApplication").getOrCreate()
+
+#Set Threshold limit of size in bytes of a DataFrame to broadcast
+spark.conf.set("spark.sql.autoBroadcastJoinThreshold", 104857600)
+
+employees_df  = spark.read.csv("C:/data/employees.csv", header=True, inferSchema=True)
+projects_df = spark.read.csv("C:/data/projects.csv", header=True, inferSchema=True)
+
+df_broadcast = employees_df.join(
+    broadcast(projects_df), "employee_id", "inner"
+)
+
+df_broadcast.show()
+
+
+
