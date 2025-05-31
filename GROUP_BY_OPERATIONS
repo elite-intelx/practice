@@ -69,7 +69,7 @@ employees_df = employees_df.withColumn(
 
 employees_df.select("employee_id", "salary", "salary_band").show()
 -----------------------------------------------------------------------
-✅ 2. Performance Rating Category (After Join)
+2. Performance Rating Category (After Join)
 Goal: Add a rating_level column based on performance_score.
 
 python
@@ -91,7 +91,7 @@ joined_df = joined_df.withColumn(
 
 joined_df.select("employee_id", "performance_score", "rating_level").show()
 -----------------------------------------------------------------------
-✅ 3. Remote Eligibility Bonus Flag
+3. Remote Eligibility Bonus Flag
 Goal: Flag remote-eligible employees in IT or Finance departments.
 
 python
