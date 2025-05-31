@@ -20,8 +20,3 @@ employees_window_df  = spark.read.csv("C:/data/employees_window.csv", header=Tru
 | Average Salary | Average salary per department using window         | `employees_window_df.withColumn("avg_salary", avg("salary").over(Window.partitionBy("department")))`                                                             |
 | Min Salary     | Minimum salary in project                          | `employees_window_df.withColumn("min_salary", min("salary").over(Window.partitionBy("project_name")))`                                                           |
 | Max Salary     | Maximum salary in department                       | `employees_window_df.withColumn("max_salary", max("salary").over(Window.partitionBy("department")))`                                                             |
-
------
-No
-| Cumulative Sum | Running total of salary in department              | `employees_window_df.withColumn("cum_salary", sum("salary").over(Window.partitionBy("department").orderBy("salary").rowsBetween(Window.unboundedPreceding, 0)))` |
-| Percent Rank   | Shows relative rank (%) in department              | `employees_window_df.withColumn("percent_rank", percent_rank().over(Window.partitionBy("department").orderBy("salary")))`                                        |
