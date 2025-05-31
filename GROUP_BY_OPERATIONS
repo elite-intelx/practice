@@ -1,0 +1,109 @@
+
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import *
+
+spark = SparkSession.builder.appName("SparkApplication").getOrCreate()
+
+employees_df  = spark.read.csv("C:/data/employees.csv", header=True, inferSchema=True)
+projects_df = spark.read.csv("C:/data/projects.csv", header=True, inferSchema=True)
+
+GROUP BY OPERATIONS (10 examples, 6 with joins)
+
+| #  | Operation                                | Description                                                    | Code                                                                                                                                                      |
+| -- | ---------------------------------------- | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 11 | Group by Department - Avg Salary         | Shows average salary of each department                        | `df = employees_df.groupBy("department").agg(avg("salary").alias("avg_salary"))`                                                                             |
+| 12 | Group by Location - Count Employees      | Counts how many employees are in each location                 | `df = employees_df.groupBy("location").count().show()`                                                                                                              |
+| 13 | Join + Group by Manager                  | After joining, sums up `team_size` for each manager            | `df = employees_df.join(projects_df, "employee_id").groupBy("manager_name").agg(sum("team_size"))`                                                           |
+| 14 | Join + Group by Project                  | Joins and calculates average `performance_score` per project   | `df = employees_df.join(projects_df, "employee_id").groupBy("project_name").agg(avg("performance_score"))`                                                   |
+| 15 | Group by Department - Max Salary         | Shows the highest salary in each department                    | `df = employees_df.groupBy("department").agg(max("salary"))`                                                                                                 |
+| 16 | Join + Remote Eligible Count by Location | Joins and counts how many are remote eligible in each location | `df = employees_df.join(projects_df, "employee_id").groupBy("location").agg(sum(when(col("remote_eligible")=="Yes", 1).otherwise(0)).alias("remote_count"))` |
+| 17 | Group by Join Year                       | Extracts year from `join_date` and counts employees per year   | `df = employees_df.withColumn("join_year", year("join_date")).groupBy("join_year").count().show()`                                                                  |
+| 18 | Join + Avg Team Size per Department      | Joins and shows avg `team_size` grouped by department          | `df = employees_df.join(projects_df, "employee_id").groupBy("department").agg(avg("team_size"))`                                                             |
+| 19 | Group by Department - Salary Stats       | Shows min, max, avg salary per department                      | `df = employees_df.groupBy("department").agg(min("salary"), max("salary"), avg("salary"))`                                                                   |
+| 20 | Join + Employees per Project             | Counts how many employees are assigned to each project         | `df = employees_df.join(projects_df, "employee_id").groupBy("project_name").count()`                                                                         |
+
+
+employees_df.select("department").distinct().show()
+
+employees_df.join(projects_df, "employee_id").groupBy("location").agg(sum(when(col("remote_eligible")=="Yes", 1).otherwise(0)).alias("remote_count"))
+
+###########################################################################################################################################################################
+
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import *
+
+spark = SparkSession.builder.appName("SparkApplication").getOrCreate()
+
+employees_df  = spark.read.csv("C:/data/employees.csv", header=True, inferSchema=True)
+projects_df = spark.read.csv("C:/data/projects.csv", header=True, inferSchema=True)
+
+##AGGREGATE OPERATIONS (10 examples, 4 with joins)
+
+
+| #  | Operation                          | Description                                          | Code                                                                                                                                                                         |
+| -- | ---------------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 21 | Count Total Employees              | Counts total number of employees                     | `df = employees_df.agg(count("*").alias("total_employees"))`                                                                                                                    |
+                                                                                                                                       |
+| 23 | Join + Highest Performing Employee | Gets top performer by sorting on `performance_score` | `df = employees_df.join(projects_df, "employee_id").orderBy(col("performance_score").desc()).limit(1)`                                                                          |                                                                                                                
+| 25 | Total Salary Expenditure           | Sums up salaries of all employees                    | `df = employees_df.agg(sum("salary").alias("total_salary"))`  
+| 26 | Join + Max Team Size per Manager   | Joins and finds largest team under each manager      | `df = employees_df.join(projects_df, "employee_id").groupBy("manager_name").agg(max("team_size"))`                                                                              |                                                                                   |
+| 28 | Join + Project-wise Salary Avg     | Joins and shows average salary per project           | `df = employees_df.join(projects_df, "employee_id").groupBy("project_name").agg(avg("salary"))`                                                                                 |
+
+
+1. Categorize Salary Level
+Goal: Add a column salary_band based on salary using when–otherwise.
+
+python
+Copy
+Edit
+from pyspark.sql.functions import when
+
+employees_df = spark.read.csv("employees.csv", header=True, inferSchema=True)
+
+employees_df = employees_df.withColumn(
+    "salary_band",
+    when(employees_df.salary > 80000, "High")
+    .when(employees_df.salary > 70000, "Medium")
+    .otherwise("Low")
+)
+
+employees_df.select("employee_id", "salary", "salary_band").show()
+-----------------------------------------------------------------------
+✅ 2. Performance Rating Category (After Join)
+Goal: Add a rating_level column based on performance_score.
+
+python
+Copy
+Edit
+from pyspark.sql.functions import when
+
+projects_df = spark.read.csv("projects.csv", header=True, inferSchema=True)
+
+# Join employees and projects
+joined_df = employees_df.join(projects_df, on="employee_id")
+
+joined_df = joined_df.withColumn(
+    "rating_level",
+    when(joined_df.performance_score >= 4.5, "Excellent")
+    .when(joined_df.performance_score >= 4.0, "Good")
+    .otherwise("Needs Improvement")
+)
+
+joined_df.select("employee_id", "performance_score", "rating_level").show()
+-----------------------------------------------------------------------
+✅ 3. Remote Eligibility Bonus Flag
+Goal: Flag remote-eligible employees in IT or Finance departments.
+
+python
+Copy
+Edit
+from pyspark.sql.functions import when
+
+joined_df = joined_df.withColumn(
+    "eligible_for_bonus",
+    when((joined_df.remote_eligible == "Yes") & 
+         (joined_df.department.isin("IT", "Finance")), "Yes")
+    .otherwise("No")
+)
+
+joined_df.select("employee_id", "department", "remote_eligible", "eligible_for_bonus").show()
