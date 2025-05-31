@@ -1,0 +1,22 @@
+employee_id,first_name,last_name,department,salary,join_date,location
+101,John,Doe,IT,75000,2018-05-21,New York
+102,Alice,Smith,HR,68000,2019-06-11,Chicago
+103,Bob,Johnson,Finance,82000,2020-02-01,San Francisco
+104,Emily,Jones,IT,71000,2021-08-15,New York
+105,Michael,Brown,Marketing,67000,2020-09-10,Chicago
+106,Linda,Davis,Finance,88000,2017-12-20,Boston
+107,David,Wilson,HR,69000,2018-11-05,New York
+108,James,Garcia,IT,73000,2022-01-22,Boston
+109,Sarah,Miller,Marketing,71000,2021-03-19,San Francisco
+110,Chris,Anderson,Finance,89000,2016-10-25,Chicago
+111,Nancy,Thomas,IT,77000,2020-12-05,New York
+112,Kevin,Martinez,HR,66000,2019-04-13,San Francisco
+113,Emma,Taylor,Marketing,72000,2023-02-11,Chicago
+114,Brian,Lee,Finance,85000,2021-06-07,Boston
+115,Ava,White,HR,64000,2022-07-19,New York
+116,Daniel,Harris,Marketing,70000,2018-02-26,Boston
+117,Olivia,Clark,IT,81000,2017-11-30,San Francisco
+118,Andrew,Lopez,HR,73000,2023-03-01,New York
+119,Megan,Hall,Finance,79000,2020-10-12,Chicago
+120,Ryan,Allen,IT,86000,2021-01-17,San Francisco
+140,Tom,Allen,IT,86000,2021-01-17,NZ
