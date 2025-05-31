@@ -1,0 +1,23 @@
+employee_id,first_name,last_name,department,salary,join_date,location,project_name
+101,John,Doe,Finance,75941,2017-04-20,Chicago,ProjectX
+102,Alice,Smith,IT,82380,2018-07-26,New York,ProjectAlpha
+103,Bob,Johnson,Marketing,80005,2016-04-05,Chicago,ProjectX
+104,Emily,Jones,Finance,78993,2023-06-05,San Francisco,ProjectY
+105,Michael,Brown,IT,99098,2017-11-11,San Francisco,ProjectZ
+106,Linda,Davis,HR,66869,2021-09-18,San Francisco,ProjectAlpha
+107,David,Wilson,Finance,91991,2018-09-17,Boston,ProjectZ
+108,James,Garcia,IT,79689,2022-12-25,Chicago,ProjectY
+109,Sarah,Miller,Finance,82683,2020-04-20,Chicago,ProjectY
+110,Chris,Anderson,Finance,78062,2022-01-23,Boston,ProjectZ
+111,Nancy,Thomas,IT,70518,2018-05-21,Chicago,ProjectZ
+112,Kevin,Martinez,HR,68716,2022-04-16,San Francisco,ProjectZ
+113,Emma,Taylor,Finance,76795,2020-08-11,New York,ProjectY
+114,Brian,Lee,Finance,86740,2016-03-08,Chicago,ProjectY
+115,Ava,White,Finance,81854,2021-08-01,New York,ProjectY
+116,Daniel,Harris,Finance,90923,2018-09-10,Boston,ProjectY
+117,Olivia,Clark,Finance,64315,2021-09-21,Chicago,ProjectY
+118,Andrew,Lopez,IT,99098,2018-09-11,Chicago,ProjectX
+119,Megan,Hall,Finance,89650,2021-10-26,San Francisco,ProjectZ
+120,Ryan,Allen,HR,88570,2016-10-06,Boston,ProjectX
+121,Tom,Cooper,IT,99099,2018-09-12,Chicago,ProjectX
+122,Chris,Lee,IT,99098,2016-10-06,Boston,ProjectZ
