@@ -1,0 +1,17 @@
+employee_id,project_name,manager_name,team_size,performance_score,remote_eligible
+101,Data Lake Migration,John Miller,8,4.5,Yes
+102,HR Automation,Susan Clark,5,4.0,Yes
+103,Finance Audit,Robert Lee,6,3.8,No
+104,App Modernization,Emily White,11,4.2,Yes
+105,Marketing Revamp,Linda Brown,7,3.9,No
+106,Analytics Platform,Mark Taylor,6,4.6,Yes
+107,Recruitment Drive,Kate Thomas,4,3.7,Yes
+108,Sales CRM Upgrade,Kevin Smith,5,4.1,No
+109,Brand Strategy,Olivia Harris,9,4.3,Yes
+110,Investment Tracker,Daniel Young,7,4.4,Yes
+111,Infra Setup,Matthew Walker,8,3.5,No
+112,Policy Review,Grace Evans,6,4.0,Yes
+113,Ad Campaign Launch,Ashley Brown,7,4.2,No
+114,App Modernization,Emily White,10,4.2,Yes
+130,Risk Modeling,Henry Adams,5,3.6,Yes
+131,Onboarding Portal,Sophia Wilson,6,4.7,Yes
