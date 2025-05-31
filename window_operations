@@ -1,0 +1,27 @@
+Window Operation Examples You Can Demonstrate
+
+##desc("salary")
+
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import *
+from pyspark.sql.window import Window
+
+spark = SparkSession.builder.appName("SparkApplication").getOrCreate()
+employees_window_df  = spark.read.csv("C:/data/employees_window.csv", header=True, inferSchema=True)
+
+| Operation      | Description                                        | Code                                                                                                                                            |
+| -------------- | -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Row Number     | Assign unique row number within each department    | `employees_window_df.withColumn("row_num", row_number().over(Window.partitionBy("department").orderBy("salary")))`                                               |
+| Rank           | Assign rank within each department based on salary | `employees_window_df.withColumn("rank", rank().over(Window.partitionBy("department").orderBy("salary")))`                                                        |
+| Dense Rank     | Same as rank but no gaps in ranking                | `employees_window_df.withColumn("dense_rank", dense_rank().over(Window.partitionBy("department").orderBy("salary")))`                                            |
+| Lead           | Show next employee's salary in same department     | `employees_window_df.withColumn("next_salary", lead("salary").over(Window.partitionBy("department").orderBy("salary")))`                                         |
+| Lag            | Show previous employee's salary in same department | `employees_window_df.withColumn("prev_salary", lag("salary").over(Window.partitionBy("department").orderBy("salary")))`                                          |
+
+| Average Salary | Average salary per department using window         | `employees_window_df.withColumn("avg_salary", avg("salary").over(Window.partitionBy("department")))`                                                             |
+| Min Salary     | Minimum salary in project                          | `employees_window_df.withColumn("min_salary", min("salary").over(Window.partitionBy("project_name")))`                                                           |
+| Max Salary     | Maximum salary in department                       | `employees_window_df.withColumn("max_salary", max("salary").over(Window.partitionBy("department")))`                                                             |
+
+-----
+No
+| Cumulative Sum | Running total of salary in department              | `employees_window_df.withColumn("cum_salary", sum("salary").over(Window.partitionBy("department").orderBy("salary").rowsBetween(Window.unboundedPreceding, 0)))` |
+| Percent Rank   | Shows relative rank (%) in department              | `employees_window_df.withColumn("percent_rank", percent_rank().over(Window.partitionBy("department").orderBy("salary")))`                                        |
